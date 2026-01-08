@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BackendWebApi", "BackendWebApi.csproj", "{9C48E614-5797-4BDB-8101-945CE16D5988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendRazor", "..\..\FrontEnd\FrontendRazor\FrontendRazor.csproj", "{04F0B88C-FA46-4335-9EFC-2EF8D34B74A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C48E614-5797-4BDB-8101-945CE16D5988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C48E614-5797-4BDB-8101-945CE16D5988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C48E614-5797-4BDB-8101-945CE16D5988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C48E614-5797-4BDB-8101-945CE16D5988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04F0B88C-FA46-4335-9EFC-2EF8D34B74A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04F0B88C-FA46-4335-9EFC-2EF8D34B74A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04F0B88C-FA46-4335-9EFC-2EF8D34B74A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04F0B88C-FA46-4335-9EFC-2EF8D34B74A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91DD002B-B59A-450B-9C38-FA7996782715}
+	EndGlobalSection
+EndGlobal

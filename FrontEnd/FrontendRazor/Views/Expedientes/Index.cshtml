@@ -1,0 +1,150 @@
+﻿@model List<FrontendRazor.ViewModels.ExpedienteViewModel>
+
+@{
+    ViewData["Title"] = "Expedientes";
+    var puedeCrear = ViewBag.PuedeCrear as bool? ?? false;
+    var puedeEditar = ViewBag.PuedeEditar as bool? ?? false;
+    var puedeEliminar = ViewBag.PuedeEliminar as bool? ?? false;
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h1>Gestión de Expedientes</h1>
+            <p>Administra los expedientes del sistema</p>
+        </div>
+        @if (puedeCrear)
+        {
+            <a asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                Nuevo Expediente
+            </a>
+        }
+    </div>
+
+    <div class="table-controls">
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Buscar..." />
+        </div>
+        <span class="records-count">
+            <span id="recordCount">@Model.Count</span> registros encontrados
+        </span>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="expedientesTable">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Tipo Cultivo</th>
+                    <th>Variedad</th>
+                    <th>Responsable</th>
+                    <th>Estado</th>
+                    <th>Fecha Ingreso</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 2rem;">
+                            No se encontraron expedientes
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.CodigoExpediente</td>
+                            <td>@item.TipoCultivo</td>
+                            <td>@item.Variedad</td>
+                            <td>@item.Responsable</td>
+                            <td>
+                                <span class="badge badge-@(item.Estado?.ToLower().Replace(" ", "-") ?? "default")">
+                                    @item.Estado
+                                </span>
+                            </td>
+                            <td>@item.FechaIngreso.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn-icon btn-view" title="Ver">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    @if (puedeEditar)
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn-icon btn-edit" title="Editar">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    }
+                                    @if (puedeEliminar)
+                                    {
+                                        <button type="button" class="btn-icon btn-delete" onclick="deleteExpediente(@item.Id)" title="Eliminar">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    }
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Búsqueda
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.getElementById('expedientesTable').getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            let visibleCount = 0;
+
+            for (let i = 0; i < rows.length; i++) {
+                const text = rows[i].textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    rows[i].style.display = '';
+                    visibleCount++;
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+
+            document.getElementById('recordCount').textContent = visibleCount;
+        });
+
+        // Eliminar
+        function deleteExpediente(id) {
+            if (!confirm('¿Estás seguro de eliminar este expediente?')) {
+                return;
+            }
+
+            const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || '@Html.AntiForgeryToken()';
+
+            fetch('@Url.Action("Delete", "Expedientes")/' + id, {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al eliminar');
+            });
+        }
+    </script>
+    @Html.AntiForgeryToken()
+}

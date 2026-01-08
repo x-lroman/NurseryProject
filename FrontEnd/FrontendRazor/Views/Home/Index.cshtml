@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    var nombreCompleto = User.FindFirst("NombreCompleto")?.Value ?? "Usuario";
+}
+
+<div class="dashboard">
+    <div class="dashboard-header">
+        <h1>Bienvenido, @nombreCompleto</h1>
+        <p>Panel de control del sistema</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card" style="border-left-color: #3498db;">
+            <div class="stat-icon" style="color: #3498db;">
+                <i class="fas fa-folder fa-2x"></i>
+            </div>
+            <div class="stat-content">
+                <h3>24</h3>
+                <p>Expedientes Activos</p>
+            </div>
+        </div>
+
+        <div class="stat-card" style="border-left-color: #2ecc71;">
+            <div class="stat-icon" style="color: #2ecc71;">
+                <i class="fas fa-chart-line fa-2x"></i>
+            </div>
+            <div class="stat-content">
+                <h3>156</h3>
+                <p>Lotes en Proceso</p>
+            </div>
+        </div>
+
+        <div class="stat-card" style="border-left-color: #9b59b6;">
+            <div class="stat-icon" style="color: #9b59b6;">
+                <i class="fas fa-leaf fa-2x"></i>
+            </div>
+            <div class="stat-content">
+                <h3>12,450</h3>
+                <p>Plantas Totales</p>
+            </div>
+        </div>
+
+        <div class="stat-card" style="border-left-color: #e74c3c;">
+            <div class="stat-icon" style="color: #e74c3c;">
+                <i class="fas fa-exclamation-circle fa-2x"></i>
+            </div>
+            <div class="stat-content">
+                <h3>3</h3>
+                <p>Alertas Pendientes</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="content-card">
+            <h2>Actividad Reciente</h2>
+            <p>Aquí se mostrará la actividad reciente del sistema...</p>
+        </div>
+
+        @if (ViewBag.Permisos != null)
+        {
+            <div class="content-card">
+                <h2>Accesos Rápidos</h2>
+                <div class="quick-links">
+                    @foreach (var permiso in ViewBag.Permisos as List<FrontendRazor.DTOs.PermisoDto>)
+                    {
+                        if (permiso.PuedeCrear)
+                        {
+                            <a href="@Url.Action("Create", permiso.Ventana)" class="quick-link">
+                                <i class="fas fa-plus-circle"></i>
+                                Nuevo @permiso.Ventana
+                            </a>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,0 +1,111 @@
+﻿@model FrontendRazor.ViewModels.ExpedienteViewModel
+
+@{
+    ViewData["Title"] = "Detalles del Expediente";
+}
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>Detalles del Expediente</h1>
+        <div class="action-buttons">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+                <i class="fas fa-edit"></i>
+                Editar
+            </a>
+            <a asp-action="Index" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i>
+                Volver
+            </a>
+        </div>
+    </div>
+
+    <div class="details-container">
+        <div class="details-card">
+            <h3>Información General</h3>
+            <div class="details-grid">
+                <div class="detail-item">
+                    <label>Código:</label>
+                    <span>@Model.CodigoExpediente</span>
+                </div>
+                <div class="detail-item">
+                    <label>Fecha de Ingreso:</label>
+                    <span>@Model.FechaIngreso.ToString("dd/MM/yyyy")</span>
+                </div>
+                <div class="detail-item">
+                    <label>Tipo de Cultivo:</label>
+                    <span>@Model.TipoCultivo</span>
+                </div>
+                <div class="detail-item">
+                    <label>Variedad:</label>
+                    <span>@Model.Variedad</span>
+                </div>
+                <div class="detail-item">
+                    <label>Responsable:</label>
+                    <span>@Model.Responsable</span>
+                </div>
+                <div class="detail-item">
+                    <label>Origen:</label>
+                    <span>@Model.Origen</span>
+                </div>
+                <div class="detail-item">
+                    <label>Certificación:</label>
+                    <span>@Model.Certificacion</span>
+                </div>
+                <div class="detail-item">
+                    <label>Estado:</label>
+                    <span class="badge badge-@(Model.Estado?.ToLower().Replace(" ", "-") ?? "default")">
+                        @Model.Estado
+                    </span>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Descripcion))
+                {
+                    <div class="detail-item full-width">
+                        <label>Descripción:</label>
+                        <p>@Model.Descripcion</p>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.Observaciones))
+                {
+                    <div class="detail-item full-width">
+                        <label>Observaciones:</label>
+                        <p>@Model.Observaciones</p>
+                    </div>
+                }
+            </div>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.CreadoPor))
+        {
+            <div class="details-card">
+                <h3>Auditoría</h3>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <label>Creado Por:</label>
+                        <span>@Model.CreadoPor</span>
+                    </div>
+                    @if (Model.FechaCreado.HasValue)
+                    {
+                        <div class="detail-item">
+                            <label>Fecha de Creación:</label>
+                            <span>@Model.FechaCreado.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.ActualizadoPor))
+                    {
+                        <div class="detail-item">
+                            <label>Actualizado Por:</label>
+                            <span>@Model.ActualizadoPor</span>
+                        </div>
+                    }
+                    @if (Model.FechaActualizado.HasValue)
+                    {
+                        <div class="detail-item">
+                            <label>Fecha de Actualización:</label>
+                            <span>@Model.FechaActualizado.Value.ToString("dd/MM/yyyy HH:mm")</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

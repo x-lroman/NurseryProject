@@ -1,0 +1,48 @@
+﻿@using System.Text.Json
+@using FrontendRazor.DTOs
+
+@{
+    var permisosJson = Context.Session.GetString("Permisos");
+    var permisos = string.IsNullOrEmpty(permisosJson)
+        ? new List<PermisoDto>()
+        : JsonSerializer.Deserialize<List<PermisoDto>>(permisosJson) ?? new List<PermisoDto>();
+
+    string GetIconClass(string? icono)
+    {
+        return icono switch
+        {
+            "folder" => "fas fa-folder",
+            "layers" => "fas fa-layer-group",
+            "box" => "fas fa-box",
+            "package" => "fas fa-cube",
+            "archive" => "fas fa-archive",
+            "grid" => "fas fa-th",
+            "leaf" => "fas fa-leaf",
+            "users" => "fas fa-users",
+            "shield" => "fas fa-shield-alt",
+            "lock" => "fas fa-lock",
+            _ => "fas fa-file"
+        };
+    }
+}
+
+<aside class="sidebar" id="sidebar">
+    <nav class="sidebar-nav">
+        <a href="@Url.Action("Index", "Home")" class="nav-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")">
+            <i class="fas fa-home"></i>
+            <span class="nav-text">Dashboard</span>
+        </a>
+
+        @foreach (var permiso in permisos)
+        {
+            var controller = permiso.Ventana;
+            var isActive = ViewContext.RouteData.Values["Controller"]?.ToString() == controller ? "active" : "";
+            var iconClass = GetIconClass(permiso.Icono);
+
+            <a href="@Url.Action("Index", controller)" class="nav-item @isActive">
+                <i class="@iconClass"></i>
+                <span class="nav-text">@permiso.Ventana</span>
+            </a>
+        }
+    </nav>
+</aside>

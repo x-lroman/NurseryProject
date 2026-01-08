@@ -1,0 +1,58 @@
+﻿@model FrontendRazor.ViewModels.LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar Sesión - Sistema de Gestión</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-sign-in-alt fa-3x"></i>
+                <h2>Sistema de Gestión</h2>
+                <p>Inicia sesión para continuar</p>
+            </div>
+
+            <form asp-action="Login" method="post" class="login-form">
+                <div asp-validation-summary="ModelOnly" class="error-message"></div>
+
+                <div class="form-group">
+                    <label asp-for="NombreUsuario">
+                        <i class="fas fa-user"></i>
+                        <span>Usuario</span>
+                    </label>
+                    <input asp-for="NombreUsuario" class="form-control" placeholder="Ingresa tu usuario" autocomplete="username" />
+                    <span asp-validation-for="NombreUsuario" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password">
+                        <i class="fas fa-lock"></i>
+                        <span>Contraseña</span>
+                    </label>
+                    <input asp-for="Password" class="form-control" placeholder="Ingresa tu contraseña" autocomplete="current-password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    Iniciar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/js/site.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate-unobtrusive/4.0.0/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
